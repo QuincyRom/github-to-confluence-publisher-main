@@ -1,0 +1,7 @@
+confluence_url: https://confluencepublishertest.atlassian.net/wiki/rest/api/
+
+confluence_space: GStar
+counfluence_parent_page_id: 33363
+confluence_search_pattern: (Generated)
+github_folder_with_md_files: ./converter/data
+github_folder_with_image_files: ./converter/data_images

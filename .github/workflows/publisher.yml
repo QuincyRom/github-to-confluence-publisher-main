@@ -34,4 +34,4 @@ jobs:
         LOGIN: ${{ secrets.confluence_login }}
         PASSWORD: ${{ secrets.confluence_password }}
       run: |
-        python3 ./publisher/main.py --login="$LOGIN" --password="$PASSWORD"
+        python3 ./converter/publisher/main.py --login="$LOGIN" --password="$PASSWORD"
