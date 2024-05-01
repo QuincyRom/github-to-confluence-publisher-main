@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+  schedule:
+    # Amsterdam time (CET) is UTC+1, so schedule for 9pm UTC
+    - cron: '0 21 * * *'  # Every day at 9:00 PM UTC (10:00 PM CET)
+    
 permissions:
   contents: read
 
