@@ -1,8 +1,8 @@
 import yaml
 
-def getConfig():
+def getConfig(overrides=None):
     with open("./converter/publisher/config/config.yaml", "r") as yamlFileConfig:
-        return yaml.safe_load(yamlFileConfig)
+        config = yaml.safe_load(yamlFileConfig)
     if overrides:
         config.update(overrides)
     return config
