@@ -1,8 +1,10 @@
-name: Trigger Script on Webhook
+name: Publish
 
 on:
-  repository_dispatch:
-    types: [run-script]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -14,10 +16,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Set up Python 3.10
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v3
       with:
         python-version: "3.10"
 
@@ -25,18 +27,11 @@ jobs:
       run: |
         ls -la
         python -m pip install --upgrade pip
-        pip install -r ./converter/publisher/requirements.txt
+        pip install -r ./publisher/requirements.txt
 
     - name: Publish MD files to the Confluence space
       env:
-        LOGIN: ${{ secrets.confluence_login }}
-        PASSWORD: ${{ secrets.confluence_password }}
+        LOGIN: ${{secrets.confluence_login }}
+        PASSWORD: ${{secrets.confluence_password }}
       run: |
-        if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-          FOLDER_PATH=${{ github.event.client_payload.folder }}
-          CONFLUENCE_SPACE=${{ github.event.client_payload.confluence_space }}
-          PARENT_PAGE_ID=${{ github.event.client_payload.parent_page_id }}
-          python3 ./converter/publisher/main.py --login="$LOGIN" --password="$PASSWORD" --folder="$FOLDER_PATH" --confluence_space="$CONFLUENCE_SPACE" --parent_page_id="$PARENT_PAGE_ID"
-        else
-          python3 ./converter/publisher/main.py --login="$LOGIN" --password="$PASSWORD"
-        fi
+        python3 ./publisher/main.py --login="$LOGIN" --password="$PASSWORD"
